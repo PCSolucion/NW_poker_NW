@@ -155,3 +155,103 @@ BUTTON {
 #playerCards button {
   display: none;
 }
+
+.combinations-table {
+  flex: 1;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  padding: 15px;
+  max-width: 480px;
+  position: absolute;
+  margin-left: 912px;
+}
+
+.prize {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  white-space: nowrap;
+  transition: all 0.3s ease-in-out;
+  position: relative; /* Añadido para posicionamiento */
+}
+
+.prize-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  vertical-align: middle;
+  transition: all 0.3s ease-in-out;
+}
+
+.combinations-table td {
+  padding: 8px;
+  vertical-align: middle;
+  transition: all 0.3s ease-in-out;
+}
+
+.combinations-table td:last-child {
+  min-width: 100px;
+  position: relative; /* Añadido para posicionamiento */
+}
+
+.prize-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Estilos modificados para el resaltado */
+.combinations-table tr.highlighted {
+  background-color: rgba(255, 22, 247, 0.3);
+  animation: pulse 1.5s infinite alternate;
+  box-shadow: 0 0 10px rgba(255, 22, 247, 0.5);
+  position: relative;
+}
+
+/* Nuevo posicionamiento del premio cuando está resaltado */
+.combinations-table tr.highlighted .prize {
+  position: absolute;
+  transform: scale(2);
+  transform-origin: left center;
+  left: 100%; /* Mover el premio a la derecha de la celda */
+  top: 50%; /* Centrar verticalmente */
+  transform: translateY(-50%) scale(2); /* Centrar y escalar */
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para mejor visibilidad */
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(255, 22, 247, 0.7);
+  z-index: 1000;
+  margin-left: 20px; /* Espacio entre la tabla y el premio ampliado */
+}
+
+.combinations-table tr.highlighted .mini-cards {
+  transform: scale(1.5);
+  transform-origin: left center;
+}
+
+/* Ajuste del contenedor para manejar el desbordamiento */
+.combinations-table {
+  overflow: visible !important; /* Permitir que el contenido ampliado sea visible */
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+  0% {
+    background-color: rgba(255, 22, 247, 0.2);
+  }
+  100% {
+    background-color: rgba(255, 22, 247, 0.4);
+  }
+}
+
+/* Asegurar que el contenedor principal permita el desbordamiento */
+.container {
+  overflow: visible !important;
+}
+
+/* Añadir una transición suave para todos los cambios */
+.combinations-table tr, 
+.prize, 
+.prize-icon, 
+.mini-cards {
+  transition: all 0.3s ease-in-out;
+}
