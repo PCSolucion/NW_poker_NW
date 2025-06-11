@@ -9,17 +9,16 @@
 <body>
 <div class="container">
   <div class="game-area">
-    <!-- partial:index.partial.html -->
-    Mesa:<div id="board" style="display: block;">
+    <div class="section-title mesa-title">Mesa</div>
+    <div id="board" class="board-area">
       <div id="card1"></div>
       <div id="card2"></div>
       <div id="card3"></div>
       <div id="card4"></div>
       <div id="card5"></div>
     </div>
-    
-    Jugador:
-    <div id="playerCards">
+    <div class="section-title jugador-title">Jugador</div>
+    <div id="playerCards" class="player-area">
       <div id="playerCard1"></div>
       <div id="playerCard2"></div>
       <button onclick="javascript: nextStep(this);">Mostrar cartas</button>
@@ -62,7 +61,7 @@
       <tr>
         <td>Escalera</td>
         <td><div class="mini-cards" id="straight"></div></td>
-        <td><div class="prize">15x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="prize">14x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
       </tr>
       <tr>
         <td>Trío</td>

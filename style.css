@@ -260,3 +260,48 @@ BUTTON {
 .mini-cards {
   transition: all 0.3s ease-in-out;
 }
+
+.section-title {
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 12px 0 6px 0;
+  padding: 4px 18px;
+  border-radius: 8px;
+  background: rgba(30,32,38,0.92);
+  color: #e0e0e0;
+  text-shadow: none;
+  box-shadow: none;
+  max-width: 220px;
+  margin-left: 0;
+  margin-right: auto;
+  border: 1px solid #232526;
+}
+.mesa-title, .jugador-title {
+  background: rgba(30,32,38,0.92);
+  color: #e0e0e0;
+  border: 1px solid #232526;
+}
+.board-area, .player-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.board-area {
+  margin-bottom: 32px;
+}
+.player-area {
+  margin-bottom: 0;
+}
+#playerCards {
+  margin-top: 0;
+}
+
+/* Cartas de la mesa más pequeñas solo visualmente */
+#board .card {
+  transform: scale(0.85);
+  margin-right: -18px; /* Ajuste para que no se separen demasiado */
+}
