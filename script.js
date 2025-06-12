@@ -149,6 +149,19 @@ let autoFlipInProgress = false; // Variable para controlar si el volteo automát
 let premioSound = new Audio('https://res.cloudinary.com/pcsolucion/video/upload/v1742121077/premio_bsbuz9.m4a');
 premioSound.preload = 'auto';
 
+// Variable global para el total de piedras de afilar
+let totalPiedras = 0;
+// Al cargar la página, intentar recuperar el total guardado y la fecha
+const hoy = new Date().toISOString().slice(0, 10); // formato YYYY-MM-DD
+const ultimaFecha = localStorage.getItem('fechaPiedras');
+if (ultimaFecha === hoy && localStorage.getItem('totalPiedras')) {
+  totalPiedras = parseInt(localStorage.getItem('totalPiedras')) || 0;
+} else {
+  totalPiedras = 0;
+  localStorage.setItem('totalPiedras', 0);
+  localStorage.setItem('fechaPiedras', hoy);
+}
+
 function deal() {
   if (deck.length()<7) {
     deck.reset();
@@ -248,6 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(() => {
     autoFlipCards();
   }, 1000);
+  actualizarTotalPiedras(); // Mostrar el total al cargar
 });
 
 function createPokerCombinations() {
@@ -375,6 +389,10 @@ function highlightCombination(combinationId) {
   if (row) {
     row.classList.add('highlighted');
     
+    // Sumar piedras de afilar al total
+    totalPiedras += getPiedrasPorCombinacion(combinationId);
+    actualizarTotalPiedras();
+    
     // Reproducir el sonido de premio
     premioSound.currentTime = 0; // Reiniciar el sonido si ya estaba reproduciéndose
     premioSound.play().catch(e => console.log("Error al reproducir sonido:", e));
@@ -492,4 +510,56 @@ function hasStraightInCards(cards) {
   }
   
   return false;
+}
+
+// Función para obtener el número de piedras según la combinación
+function getPiedrasPorCombinacion(combinationId) {
+  switch (combinationId) {
+    case "royalFlush": return 50;
+    case "straightFlush": return 40;
+    case "fourOfAKind": return 30;
+    case "fullHouse": return 25;
+    case "flush": return 20;
+    case "straight": return 14;
+    case "threeOfAKind": return 10;
+    case "twoPair": return 8;
+    case "pair": return 4;
+    case "highCard": return 2;
+    default: return 0;
+  }
+}
+
+// Función para actualizar el total en la interfaz
+function actualizarTotalPiedras() {
+  let totalDiv = document.getElementById('totalPiedrasDiv');
+  if (!totalDiv) {
+    totalDiv = document.createElement('div');
+    totalDiv.id = 'totalPiedrasDiv';
+    totalDiv.style = `
+      margin: 18px auto 18px auto;
+      padding: 18px 0 10px 0;
+      width: 100%;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg, #3fa7ff 0%, #111 100%);
+      border-radius: 18px;
+      box-shadow: 0 4px 18px 0 rgba(63,167,255,0.10);
+      border: 1.5px solid #3fa7ff;
+    `;
+    document.querySelector('.combinations-table').prepend(totalDiv);
+  }
+  totalDiv.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;width:100%;">
+      <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" alt="Piedra de afilar" style="width:38px;height:38px;filter:drop-shadow(0 0 4px #3fa7ff);">
+      <span style="color:#3fa7ff; font-size:2.5rem; font-weight:800; letter-spacing:2px; text-shadow:0 0 8px #3fa7ff;">${totalPiedras}</span>
+    </div>
+    <div style="color:#fff; font-size:1.05rem; margin-top:6px; letter-spacing:0.5px; text-align:center; opacity:0.85;">Piedras de afilar ganadas hoy</div>
+    <div style="color:#3fa7ff; font-size:0.95rem; margin-top:2px; opacity:0.7;">${hoy.split('-').reverse().join('-')}</div>
+  `;
+  // Guardar el total y la fecha en localStorage
+  localStorage.setItem('totalPiedras', totalPiedras);
+  localStorage.setItem('fechaPiedras', hoy);
 }
