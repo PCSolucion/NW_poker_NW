@@ -551,13 +551,20 @@ function actualizarTotalPiedras() {
     `;
     document.querySelector('.combinations-table').prepend(totalDiv);
   }
+
+  // Formatear la fecha
+  const fecha = new Date(hoy);
+  const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  const fechaFormateada = `${dias[fecha.getDay()]}, ${fecha.getDate()} de ${meses[fecha.getMonth()]} de ${fecha.getFullYear()}`;
+
   totalDiv.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;width:100%;">
       <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" alt="Piedra de afilar" style="width:38px;height:38px;filter:drop-shadow(0 0 4px #3fa7ff);">
       <span style="color:#3fa7ff; font-size:2.5rem; font-weight:800; letter-spacing:2px; text-shadow:0 0 8px #3fa7ff;">${totalPiedras}</span>
     </div>
     <div style="color:#fff; font-size:1.05rem; margin-top:6px; letter-spacing:0.5px; text-align:center; opacity:0.85;">Piedras de afilar ganadas hoy</div>
-    <div style="color:#3fa7ff; font-size:0.95rem; margin-top:2px; opacity:0.7;">${hoy.split('-').reverse().join('-')}</div>
+    <div style="color:#fff; font-size:0.95rem; margin-top:8px; padding:4px 12px; border-radius:6px; background:rgba(0,0,0,0.4); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${fechaFormateada}</div>
   `;
   // Guardar el total y la fecha en localStorage
   localStorage.setItem('totalPiedras', totalPiedras);
