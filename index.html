@@ -33,58 +33,71 @@
         <th>Combinación</th>
         <th>Ejemplo</th>
         <th>Premio</th>
+        <th>Porcentaje</th>
       </tr>
       <tr>
         <td>Escalera Real</td>
         <td><div class="mini-cards" id="royalFlush"></div></td>
         <td><div class="prize">50x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="royalFlush-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Escalera de Color</td>
         <td><div class="mini-cards" id="straightFlush"></div></td>
         <td><div class="prize">40x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="straightFlush-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Póker</td>
         <td><div class="mini-cards" id="fourOfAKind"></div></td>
         <td><div class="prize">30x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="fourOfAKind-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Full House</td>
         <td><div class="mini-cards" id="fullHouse"></div></td>
         <td><div class="prize">25x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="fullHouse-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Color</td>
         <td><div class="mini-cards" id="flush"></div></td>
         <td><div class="prize">20x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="flush-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Escalera</td>
         <td><div class="mini-cards" id="straight"></div></td>
         <td><div class="prize">14x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="straight-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Trío</td>
         <td><div class="mini-cards" id="threeOfAKind"></div></td>
         <td><div class="prize">10x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="threeOfAKind-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Doble Pareja</td>
         <td><div class="mini-cards" id="twoPair"></div></td>
         <td><div class="prize">8x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="twoPair-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Pareja</td>
         <td><div class="mini-cards" id="pair"></div></td>
         <td><div class="prize">6x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="pair-percent"><span>0%</span></div></td>
       </tr>
       <tr>
         <td>Carta Alta</td>
         <td><div class="mini-cards" id="highCard"></div></td>
         <td><div class="prize">4x <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" class="prize-icon" alt="Piedra de afilar potente"></div></td>
+        <td><div class="percentage" id="highCard-percent"><span>0%</span></div></td>
       </tr>
     </table>
+    <div id="totalJugadasDiv" class="total-jugadas">Total de jugadas (global): 0</div>
+    <button id="resetStatsBtn" onclick="resetEstadisticas()">Reiniciar Estadísticas</button>
   </div>
 </div>
 <!-- partial -->

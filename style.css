@@ -26,7 +26,7 @@ BODY {
   background-color: rgba(0,0,0,0.3);
   border-radius: 10px;
   padding: 15px;
-  max-width: 380px;
+  max-width: 680px;
   position: absolute;
   margin-left: 912px
 }
@@ -123,7 +123,7 @@ BODY {
 }
 
 .card.flipping {
-  animation: flip-card 0.6s;
+  animation: flip-card 0.3s;
 }
 
 @keyframes flip-card {
@@ -166,7 +166,7 @@ BUTTON {
   background-color: rgba(0,0,0,0.3);
   border-radius: 10px;
   padding: 15px;
-  max-width: 480px;
+  max-width: 550px;
   position: absolute;
   margin-left: 912px;
 }
@@ -198,6 +198,54 @@ BUTTON {
 .combinations-table td:last-child {
   min-width: 100px;
   position: relative; /* Añadido para posicionamiento */
+}
+
+.percentage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #3fa7ff;
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(63, 167, 255, 0.1);
+  border: 1px solid rgba(63, 167, 255, 0.3);
+  transition: all 0.3s ease-in-out;
+  min-width: 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.percentage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--progress-width, 0%);
+  background: linear-gradient(90deg, rgba(63, 167, 255, 0.3) 0%, rgba(63, 167, 255, 0.5) 100%);
+  transition: width 0.5s ease-in-out;
+  z-index: 1;
+}
+
+.percentage span {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.combinations-table tr.highlighted .percentage {
+  background: rgba(255, 22, 247, 0.2);
+  border-color: rgba(255, 22, 247, 0.5);
+  color: #ff16f7;
+  animation: pulse 1.5s infinite alternate;
+}
+
+.combinations-table tr.highlighted .percentage::before {
+  background: linear-gradient(90deg, rgba(255, 22, 247, 0.4) 0%, rgba(255, 22, 247, 0.6) 100%);
 }
 
 .prize-icon:hover {
@@ -304,4 +352,43 @@ BUTTON {
 #board .card {
   transform: scale(0.85);
   margin-right: -18px; /* Ajuste para que no se separen demasiado */
+}
+
+#resetStatsBtn {
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(255, 68, 68, 0.3);
+  margin-top: 10px;
+  width: auto;
+  min-width: 120px;
+}
+
+#resetStatsBtn:hover {
+  background: linear-gradient(135deg, #ff6666 0%, #dd2222 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 68, 68, 0.4);
+}
+
+#resetStatsBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(255, 68, 68, 0.3);
+}
+
+.total-jugadas {
+  text-align: center;
+  color: #ffffff;
+  font-size: 0.85rem;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }

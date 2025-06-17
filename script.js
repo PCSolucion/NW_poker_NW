@@ -83,13 +83,13 @@ class Card {
       setTimeout(() => {
       this.placeHolder.style.backgroundPosition = "0px";
         this.flipped = false;
-      }, 300); // La mitad de la duración de la animación para cambiar la imagen cuando la carta está de lado
+      }, 150); // La mitad de la duración de la animación para cambiar la imagen cuando la carta está de lado
     } else {
       this.addFlipAnimation();
       setTimeout(() => {
       this.placeHolder.style.backgroundPosition = -150*this.position + "px";
         this.flipped = true;
-      }, 300); // La mitad de la duración de la animación para cambiar la imagen cuando la carta está de lado
+      }, 150); // La mitad de la duración de la animación para cambiar la imagen cuando la carta está de lado
     }
   } //End of flip()
   
@@ -100,7 +100,7 @@ class Card {
     // Eliminar la clase después de que la animación haya terminado
     setTimeout(() => {
       this.placeHolder.classList.remove('flipping');
-    }, 600); // Duración completa de la animación
+    }, 300); // Duración completa de la animación
   }
   
 } //End of Card class
@@ -160,6 +160,104 @@ if (ultimaFecha === hoy && localStorage.getItem('totalPiedras')) {
   totalPiedras = 0;
   localStorage.setItem('totalPiedras', 0);
   localStorage.setItem('fechaPiedras', hoy);
+}
+
+// Variables para estadísticas de combinaciones (GLOBALES - no se reinician por fecha)
+let estadisticasCombinaciones = {
+  royalFlush: 0,
+  straightFlush: 0,
+  fourOfAKind: 0,
+  fullHouse: 0,
+  flush: 0,
+  straight: 0,
+  threeOfAKind: 0,
+  twoPair: 0,
+  pair: 0,
+  highCard: 0
+};
+
+let totalJugadas = 0; // Contador global de jugadas (no se reinicia por fecha)
+
+// Cargar estadísticas guardadas
+function cargarEstadisticas() {
+  const statsGuardadas = localStorage.getItem('estadisticasCombinaciones');
+  const totalGuardado = localStorage.getItem('totalJugadas');
+  
+  if (statsGuardadas) {
+    estadisticasCombinaciones = JSON.parse(statsGuardadas);
+  }
+  
+  if (totalGuardado) {
+    totalJugadas = parseInt(totalGuardado);
+  }
+  
+  actualizarPorcentajes();
+}
+
+// Guardar estadísticas
+function guardarEstadisticas() {
+  localStorage.setItem('estadisticasCombinaciones', JSON.stringify(estadisticasCombinaciones));
+  localStorage.setItem('totalJugadas', totalJugadas.toString());
+}
+
+// Actualizar porcentajes en la interfaz
+function actualizarPorcentajes() {
+  const combinaciones = [
+    'royalFlush', 'straightFlush', 'fourOfAKind', 'fullHouse', 
+    'flush', 'straight', 'threeOfAKind', 'twoPair', 'pair', 'highCard'
+  ];
+  
+  combinaciones.forEach(combinacion => {
+    const elemento = document.getElementById(`${combinacion}-percent`);
+    if (elemento) {
+      const porcentaje = totalJugadas > 0 ? 
+        ((estadisticasCombinaciones[combinacion] / totalJugadas) * 100).toFixed(2) : '0.00';
+      
+      // Actualizar el texto del porcentaje
+      const spanElement = elemento.querySelector('span');
+      if (spanElement) {
+        spanElement.textContent = `${porcentaje}%`;
+      }
+      
+      // Actualizar el ancho de la barra de progreso
+      elemento.style.setProperty('--progress-width', `${porcentaje}%`);
+      elemento.style.setProperty('--progress-width', `${porcentaje}%`);
+    }
+  });
+  
+  // Actualizar contador de jugadas totales
+  const totalJugadasElement = document.getElementById('totalJugadasDiv');
+  if (totalJugadasElement) {
+    totalJugadasElement.textContent = `Total de jugadas (global): ${totalJugadas}`;
+  }
+}
+
+// Función para reiniciar estadísticas globales
+function resetEstadisticas() {
+  if (confirm('¿Estás seguro de que quieres reiniciar todas las estadísticas globales? Esta acción no se puede deshacer.')) {
+    // Reiniciar contadores
+    estadisticasCombinaciones = {
+      royalFlush: 0,
+      straightFlush: 0,
+      fourOfAKind: 0,
+      fullHouse: 0,
+      flush: 0,
+      straight: 0,
+      threeOfAKind: 0,
+      twoPair: 0,
+      pair: 0,
+      highCard: 0
+    };
+    totalJugadas = 0;
+    
+    // Guardar estadísticas reiniciadas
+    guardarEstadisticas();
+    
+    // Actualizar interfaz
+    actualizarPorcentajes();
+    
+    alert('Estadísticas reiniciadas correctamente.');
+  }
 }
 
 function deal() {
@@ -254,6 +352,7 @@ function autoFlipCards() {
 
 // Iniciar el juego cuando la página se carga
 document.addEventListener('DOMContentLoaded', function() {
+  cargarEstadisticas(); // Cargar estadísticas guardadas
   deal();
   // Crear las combinaciones de póker de ejemplo
   createPokerCombinations();
@@ -388,6 +487,16 @@ function highlightCombination(combinationId) {
   const row = document.getElementById(combinationId).closest('tr');
   if (row) {
     row.classList.add('highlighted');
+    
+    // Incrementar contador de jugadas y estadísticas
+    totalJugadas++;
+    estadisticasCombinaciones[combinationId]++;
+    
+    // Guardar estadísticas
+    guardarEstadisticas();
+    
+    // Actualizar porcentajes en la interfaz
+    actualizarPorcentajes();
     
     // Sumar piedras de afilar al total
     totalPiedras += getPiedrasPorCombinacion(combinationId);
@@ -563,7 +672,7 @@ function actualizarTotalPiedras() {
       <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" alt="Piedra de afilar" style="width:38px;height:38px;filter:drop-shadow(0 0 4px #3fa7ff);">
       <span style="color:#3fa7ff; font-size:2.5rem; font-weight:800; letter-spacing:2px; text-shadow:0 0 8px #3fa7ff;">${totalPiedras}</span>
     </div>
-    <div style="color:#fff; font-size:1.05rem; margin-top:6px; letter-spacing:0.5px; text-align:center; opacity:0.85;">Piedras de afilar ganadas hoy</div>
+    <div style="color:#fff; font-size:1.05rem; margin-top:6px; letter-spacing:0.5px; text-align:center; opacity:0.85;">Piedras de afilar entregadas hoy</div>
     <div style="color:#fff; font-size:0.95rem; margin-top:8px; padding:4px 12px; border-radius:6px; background:rgba(0,0,0,0.4); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${fechaFormateada}</div>
   `;
   // Guardar el total y la fecha en localStorage
