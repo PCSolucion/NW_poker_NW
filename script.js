@@ -645,19 +645,37 @@ function actualizarTotalPiedras() {
     totalDiv = document.createElement('div');
     totalDiv.id = 'totalPiedrasDiv';
     totalDiv.style = `
-      margin: 18px auto 18px auto;
-      padding: 18px 0 10px 0;
+      margin: 20px auto 20px auto;
+      padding: 25px 20px 20px 20px;
       width: 100%;
-      max-width: 340px;
+      max-width: 380px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(90deg, #3fa7ff 0%, #111 100%);
-      border-radius: 18px;
-      box-shadow: 0 4px 18px 0 rgba(63,167,255,0.10);
-      border: 1.5px solid #3fa7ff;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 50%, rgba(255, 69, 0, 0.1) 100%);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.2);
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
     `;
+    
+    // Agregar efecto de brillo
+    const brillo = document.createElement('div');
+    brillo.style = `
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      animation: shine 3s infinite;
+      pointer-events: none;
+    `;
+    totalDiv.appendChild(brillo);
+    
     document.querySelector('.combinations-table').prepend(totalDiv);
   }
 
@@ -668,13 +686,38 @@ function actualizarTotalPiedras() {
   const fechaFormateada = `${dias[fecha.getDay()]}, ${fecha.getDate()} de ${meses[fecha.getMonth()]} de ${fecha.getFullYear()}`;
 
   totalDiv.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;width:100%;">
-      <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" alt="Piedra de afilar" style="width:38px;height:38px;filter:drop-shadow(0 0 4px #3fa7ff);">
-      <span style="color:#3fa7ff; font-size:2.5rem; font-weight:800; letter-spacing:2px; text-shadow:0 0 8px #3fa7ff;">${totalPiedras}</span>
+    <div style="display:flex;align-items:center;justify-content:center;gap:20px;width:100%;margin-bottom:8px;">
+      <img src="https://res.cloudinary.com/pcsolucion/image/upload/v1749534263/honingstonet5_efjw2a.png" alt="Piedra de afilar" style="width:42px;height:42px;filter:drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));animation:pulse 2s infinite;">
+      <span style="color:#FFD700; font-size:3rem; font-weight:900; letter-spacing:3px; text-shadow:0 0 15px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0,0,0,0.5);">${totalPiedras}</span>
     </div>
-    <div style="color:#fff; font-size:1.05rem; margin-top:6px; letter-spacing:0.5px; text-align:center; opacity:0.85;">Piedras de afilar entregadas hoy</div>
-    <div style="color:#fff; font-size:0.95rem; margin-top:8px; padding:4px 12px; border-radius:6px; background:rgba(0,0,0,0.4); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${fechaFormateada}</div>
+    <div style="color:#fff; font-size:1.1rem; margin-top:8px; letter-spacing:1px; text-align:center; font-weight:600; text-shadow:1px 1px 3px rgba(0,0,0,0.8);">Piedras de afilar entregadas hoy</div>
+    <div style="color:#fff; font-size:0.9rem; margin-top:12px; padding:8px 16px; border-radius:12px; background:rgba(0,0,0,0.6); text-shadow:0 1px 2px rgba(0,0,0,0.8); border:1px solid rgba(255, 215, 0, 0.3);">${fechaFormateada}</div>
+    <style>
+      @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); }
+        50% { transform: scale(1.1); filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1)); }
+      }
+    </style>
   `;
+  
+  // Agregar el efecto de brillo nuevamente
+  const brillo = document.createElement('div');
+  brillo.style = `
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    animation: shine 3s infinite;
+    pointer-events: none;
+  `;
+  totalDiv.appendChild(brillo);
+  
   // Guardar el total y la fecha en localStorage
   localStorage.setItem('totalPiedras', totalPiedras);
   localStorage.setItem('fechaPiedras', hoy);
