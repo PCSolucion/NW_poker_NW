@@ -54,18 +54,39 @@ BODY {
 }
 
 .combinations-table tr.highlighted {
-  background-color: rgba(255, 22, 247, 0.3);
-  animation: pulse 1.5s infinite alternate;
-  box-shadow: 0 0 10px rgba(255, 22, 247, 0.5);
+  background-color: rgba(120, 60, 200, 0.18);
+  animation: none;
+  box-shadow: none;
 }
 
-@keyframes pulse {
-  0% {
-    background-color: rgba(255, 22, 247, 0.2);
-  }
-  100% {
-    background-color: rgba(255, 22, 247, 0.4);
-  }
+.combinations-table tr.highlighted .percentage {
+  background: rgba(63, 167, 255, 0.1);
+  border-color: rgba(63, 167, 255, 0.3);
+  color: #3fa7ff;
+  animation: none;
+}
+
+.combinations-table tr.highlighted .percentage::before {
+  background: linear-gradient(90deg, rgba(63, 167, 255, 0.3) 0%, rgba(63, 167, 255, 0.5) 100%);
+}
+
+.combinations-table tr.highlighted .prize {
+  position: relative;
+  transform: none;
+  left: unset;
+  top: unset;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+  padding: 6px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.2);
+  z-index: 1;
+  margin-left: 0;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: none;
+}
+
+.combinations-table tr.highlighted .mini-cards {
+  transform: none;
 }
 
 .mini-cards {
@@ -243,50 +264,35 @@ BUTTON {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-.combinations-table tr.highlighted .percentage {
-  background: rgba(255, 22, 247, 0.2);
-  border-color: rgba(255, 22, 247, 0.5);
-  color: #ff16f7;
-  animation: pulse 1.5s infinite alternate;
-}
-
-.combinations-table tr.highlighted .percentage::before {
-  background: linear-gradient(90deg, rgba(255, 22, 247, 0.4) 0%, rgba(255, 22, 247, 0.6) 100%);
-}
-
 .prize-icon:hover {
   transform: scale(1.2);
 }
 
 /* Estilos modificados para el resaltado */
 .combinations-table tr.highlighted {
-  background-color: rgba(255, 22, 247, 0.3);
-  animation: pulse 1.5s infinite alternate;
-  box-shadow: 0 0 10px rgba(255, 22, 247, 0.5);
-  position: relative;
+  background-color: rgba(120, 60, 200, 0.18);
+  animation: none;
+  box-shadow: none;
 }
 
 /* Nuevo posicionamiento del premio cuando está resaltado */
 .combinations-table tr.highlighted .prize {
-  position: absolute;
-  transform: scale(2.5);
-  transform-origin: left center;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%) scale(2.5);
-  background: linear-gradient(135deg, rgba(255, 22, 247, 0.9) 0%, rgba(255, 105, 180, 0.9) 100%);
-  padding: 15px 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 25px rgba(255, 22, 247, 0.8), 0 8px 16px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  margin-left: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
+  position: relative;
+  transform: none;
+  left: unset;
+  top: unset;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+  padding: 6px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.2);
+  z-index: 1;
+  margin-left: 0;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: none;
 }
 
 .combinations-table tr.highlighted .mini-cards {
-  transform: scale(1.5);
-  transform-origin: left center;
+  transform: none;
 }
 
 /* Ajuste del contenedor para manejar el desbordamiento */

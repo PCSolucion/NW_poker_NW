@@ -210,17 +210,15 @@ function actualizarPorcentajes() {
   combinaciones.forEach(combinacion => {
     const elemento = document.getElementById(`${combinacion}-percent`);
     if (elemento) {
+      const veces = estadisticasCombinaciones[combinacion] || 0;
       const porcentaje = totalJugadas > 0 ? 
-        ((estadisticasCombinaciones[combinacion] / totalJugadas) * 100).toFixed(2) : '0.00';
-      
-      // Actualizar el texto del porcentaje
+        ((veces / totalJugadas) * 100).toFixed(2) : '0.00';
+      // Actualizar el texto del porcentaje y número de veces
       const spanElement = elemento.querySelector('span');
       if (spanElement) {
-        spanElement.textContent = `${porcentaje}%`;
+        spanElement.textContent = `${veces} veces (${porcentaje}%)`;
       }
-      
       // Actualizar el ancho de la barra de progreso
-      elemento.style.setProperty('--progress-width', `${porcentaje}%`);
       elemento.style.setProperty('--progress-width', `${porcentaje}%`);
     }
   });
