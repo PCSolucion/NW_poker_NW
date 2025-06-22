@@ -406,3 +406,133 @@ BUTTON {
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+.edit-prize-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  justify-content: center; align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 15px; top: 10px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Estilos shadcn para el modal y formulario de edición de premios */
+.shadcn-modal {
+  background: #18181b;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+  padding: 32px 24px 24px 24px;
+  max-width: 420px;
+  width: 96vw;
+  color: #f4f4f5;
+  border: 1.5px solid #27272a;
+  font-family: 'Inter', Verdana, Geneva, Tahoma, sans-serif;
+}
+.shadcn-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #f4f4f5;
+  letter-spacing: 0.01em;
+}
+.shadcn-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.shadcn-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.shadcn-input, .shadcn-select, .shadcn-btn, textarea.shadcn-input {
+  background: #232326;
+  border: 1.5px solid #27272a;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #f4f4f5;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+.shadcn-input:focus, .shadcn-select:focus, textarea.shadcn-input:focus {
+  border-color: #a21caf;
+  box-shadow: 0 0 0 2px #a21caf33;
+}
+.shadcn-btn {
+  background: linear-gradient(90deg, #a21caf 0%, #6366f1 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+}
+.shadcn-btn:hover {
+  background: linear-gradient(90deg, #6366f1 0%, #a21caf 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+.shadcn-close {
+  color: #a1a1aa;
+  font-size: 2rem;
+  position: absolute;
+  right: 18px;
+  top: 12px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.shadcn-close:hover {
+  color: #a21caf;
+}
+.shadcn-icon-preview {
+  margin-top: 6px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.shadcn-icon-preview img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #27272a;
+  background: #232326;
+  box-shadow: 0 1px 4px rgba(99,102,241,0.08);
+}

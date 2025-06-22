@@ -720,3 +720,155 @@ function actualizarTotalPiedras() {
   localStorage.setItem('totalPiedras', totalPiedras);
   localStorage.setItem('fechaPiedras', hoy);
 }
+
+// Lógica para editar premios (mejorada)
+const editPrizeBtn = document.getElementById('editPrizeBtn');
+const editPrizeModal = document.getElementById('editPrizeModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const editPrizeForm = document.getElementById('editPrizeForm');
+const iconInput = document.getElementById('prizeIcon');
+const iconPreview = document.getElementById('iconPreview');
+const descInput = document.getElementById('prizeDescription');
+const iconSource = document.getElementById('iconSource');
+const iconFileInput = document.getElementById('prizeIconFile');
+
+// Cambia entre input URL y archivo
+iconSource.addEventListener('change', function() {
+  if (iconSource.value === 'url') {
+    iconInput.style.display = '';
+    iconFileInput.style.display = 'none';
+    iconInput.required = true;
+    iconFileInput.required = false;
+    iconPreview.innerHTML = '';
+    if (iconInput.value) {
+      const img = document.createElement('img');
+      img.src = iconInput.value;
+      img.alt = 'Vista previa';
+      img.onerror = () => img.style.opacity = 0.3;
+      iconPreview.appendChild(img);
+    }
+  } else {
+    iconInput.style.display = 'none';
+    iconFileInput.style.display = '';
+    iconInput.required = false;
+    iconFileInput.required = true;
+    iconPreview.innerHTML = '';
+  }
+});
+
+// Vista previa y almacenamiento base64 para archivo
+iconFileInput.addEventListener('change', function() {
+  iconPreview.innerHTML = '';
+  const file = iconFileInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const base64 = e.target.result;
+      const img = document.createElement('img');
+      img.src = base64;
+      img.alt = 'Vista previa';
+      iconPreview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Vista previa para URL (ya estaba)
+iconInput.addEventListener('input', function() {
+  if (iconSource.value !== 'url') return;
+  iconPreview.innerHTML = '';
+  if (iconInput.value) {
+    const img = document.createElement('img');
+    img.src = iconInput.value;
+    img.alt = 'Vista previa';
+    img.onerror = () => img.style.opacity = 0.3;
+    iconPreview.appendChild(img);
+  }
+});
+
+editPrizeBtn.onclick = () => {
+  editPrizeModal.style.display = 'flex';
+  // Reset visual
+  editPrizeForm.reset();
+  iconPreview.innerHTML = '';
+  iconInput.style.display = '';
+  iconFileInput.style.display = 'none';
+  iconSource.value = 'url';
+};
+
+editPrizeForm.onsubmit = function(e) {
+  e.preventDefault();
+  const combination = document.getElementById('combinationSelect').value;
+  const amount = document.getElementById('prizeAmount').value;
+  const name = document.getElementById('prizeName').value;
+  const desc = descInput.value;
+  let icon = '';
+
+  function saveAndUpdate(iconValue, iconType) {
+    // Guardar todos los datos en localStorage
+    localStorage.setItem('premio_data_' + combination, JSON.stringify({
+      type: iconType,
+      value: iconValue,
+      amount,
+      name,
+      desc
+    }));
+    actualizarCeldaPremio(iconValue, iconType);
+  }
+
+  if (iconSource.value === 'url') {
+    icon = iconInput.value;
+    if (!icon.match(/^https?:\/\//)) {
+      iconInput.focus();
+      iconPreview.innerHTML = '<span style="color:#e11d48;font-size:0.95em;">URL inválida</span>';
+      return;
+    }
+    saveAndUpdate(icon, 'url');
+  } else {
+    const file = iconFileInput.files[0];
+    if (!file) {
+      iconPreview.innerHTML = '<span style="color:#e11d48;font-size:0.95em;">Selecciona una imagen</span>';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      icon = ev.target.result;
+      saveAndUpdate(icon, 'base64');
+    };
+    reader.readAsDataURL(file);
+    return; // Esperar a que FileReader termine
+  }
+
+  function actualizarCeldaPremio(iconValue, iconType) {
+    const prizeCell = document.querySelector(`#${combination}`).parentElement.nextElementSibling;
+    prizeCell.innerHTML = `<div class=\"prize\">${amount}x <img src=\"${iconValue}\" class=\"prize-icon\" alt=\"${name}\" title=\"${desc}\"></div>`;
+    editPrizeModal.style.display = 'none';
+    editPrizeForm.reset();
+    iconPreview.innerHTML = '';
+    iconInput.style.display = '';
+    iconFileInput.style.display = 'none';
+    iconSource.value = 'url';
+  }
+};
+
+// Al cargar la página, restaurar iconos y datos personalizados
+window.addEventListener('DOMContentLoaded', function() {
+  const combinaciones = [
+    'royalFlush', 'straightFlush', 'fourOfAKind', 'fullHouse', 
+    'flush', 'straight', 'threeOfAKind', 'twoPair', 'pair', 'highCard'
+  ];
+  combinaciones.forEach(comb => {
+    const data = localStorage.getItem('premio_data_' + comb);
+    if (data) {
+      try {
+        const obj = JSON.parse(data);
+        if (obj && obj.value) {
+          const prizeCell = document.querySelector(`#${comb}`).parentElement.nextElementSibling;
+          if (prizeCell) {
+            prizeCell.innerHTML = `<div class=\"prize\">${obj.amount}x <img src=\"${obj.value}\" class=\"prize-icon\" alt=\"${obj.name || ''}\" title=\"${obj.desc || ''}\"></div>`;
+          }
+        }
+      } catch(e){}
+    }
+  });
+});
